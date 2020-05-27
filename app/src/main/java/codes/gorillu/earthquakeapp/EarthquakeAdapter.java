@@ -55,6 +55,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         // Find the TextView with view ID magnitude
         TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
+        magnitudeView.setText(currentEarthquake.getMagnitude());
 
 
         // Get the original location string from the Earthquake object,
