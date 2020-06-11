@@ -2,19 +2,19 @@ package codes.gorillu.earthquakeapp;
 
 public class Earthquake {
 
-    private String mMagnitude;
+    private double mMagnitude;
 
     private String mLocation;
 
     private long mTimeInMilliseconds;
 
-    public Earthquake(String magnitude, String location, long TimeInMilliseconds) {
+    public Earthquake(double magnitude, String location, long TimeInMilliseconds) {
         this.mMagnitude = magnitude;
         this.mLocation = location;
         this.mTimeInMilliseconds = TimeInMilliseconds;
     }
 
-    public String getMagnitude() {
+    public double getMagnitude() {
         return mMagnitude;
     }
 
