@@ -8,10 +8,13 @@ public class Earthquake {
 
     private long mTimeInMilliseconds;
 
-    public Earthquake(double magnitude, String location, long TimeInMilliseconds) {
+    private String mUrl;
+
+    public Earthquake(double magnitude, String location, long TimeInMilliseconds, String url) {
         this.mMagnitude = magnitude;
         this.mLocation = location;
         this.mTimeInMilliseconds = TimeInMilliseconds;
+        this.mUrl = url;
     }
 
     public double getMagnitude() {
@@ -24,6 +27,13 @@ public class Earthquake {
 
     public long getTimeInMilliseconds() {
         return mTimeInMilliseconds;
+    }
+
+    /**
+     * Returns the website URL to find more information about the earthquake.
+     */
+    public String getUrl() {
+        return mUrl;
     }
 
 
