@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,11 +22,14 @@ public class EarthquakeActivity extends AppCompatActivity
 
     private static final String LOG_TAG = EarthquakeActivity.class.getName();
 
+    /** TextView that is displayed when the list is empty */
+    private TextView mEmptyStateTextView;
+
     /**
      * URL for earthquake data from the USGS dataset
      */
-//    private static final String USGS_REQUEST_URL ="https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
-    private static final String USGS_REQUEST_URL ="";
+    private static final String USGS_REQUEST_URL ="https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
+
 
     /**
      * Constant value for the earthquake loader ID. We can choose any integer.
@@ -45,6 +49,9 @@ public class EarthquakeActivity extends AppCompatActivity
 
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list_view);
+
+        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+        earthquakeListView.setEmptyView(mEmptyStateTextView);
 
         // Create a new adapter that takes an empty list of earthquakes as input
         mAdapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
@@ -83,8 +90,11 @@ public class EarthquakeActivity extends AppCompatActivity
 
     }
 
+
     @Override
     public android.content.Loader<List<Earthquake>> onCreateLoader(int i, Bundle bundle) {
+
+
         // Create a new loader for the given URL
         return new EarthquakeLoader(this, USGS_REQUEST_URL);
     }
@@ -92,10 +102,12 @@ public class EarthquakeActivity extends AppCompatActivity
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
 
-        // Show empty text view if there no data available
+        // Set empty state text to display "No earthquakes found."
+        mEmptyStateTextView.setText(R.string.no_data);
 
-        ListView emptyListView = (ListView) findViewById(R.id.list_view);
-        emptyListView.setEmptyView(findViewById(R.id.empty_text_view));
+        // Hide loading indicator because the data has been loaded
+        View loadingIndicator = findViewById(R.id.loading_indicator);
+        loadingIndicator.setVisibility(View.GONE);
 
 
         // Clear the adapter of previous earthquake data
