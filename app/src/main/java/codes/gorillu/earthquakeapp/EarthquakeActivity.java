@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +24,8 @@ public class EarthquakeActivity extends AppCompatActivity
     /**
      * URL for earthquake data from the USGS dataset
      */
-    private static final String USGS_REQUEST_URL ="https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
+//    private static final String USGS_REQUEST_URL ="https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
+    private static final String USGS_REQUEST_URL ="";
 
     /**
      * Constant value for the earthquake loader ID. We can choose any integer.
@@ -77,6 +79,8 @@ public class EarthquakeActivity extends AppCompatActivity
         // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
         // because this activity implements the LoaderCallbacks interface).
         loaderManager.initLoader(EARTHQUAKE_LOADER_ID, null, this);
+
+
     }
 
     @Override
@@ -87,6 +91,13 @@ public class EarthquakeActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
+
+        // Show empty text view if there no data available
+
+        ListView emptyListView = (ListView) findViewById(R.id.list_view);
+        emptyListView.setEmptyView(findViewById(R.id.empty_text_view));
+
+
         // Clear the adapter of previous earthquake data
         mAdapter.clear();
 
@@ -102,4 +113,7 @@ public class EarthquakeActivity extends AppCompatActivity
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
     }
+
+
+
 }
